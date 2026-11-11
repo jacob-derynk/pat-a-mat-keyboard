@@ -21,7 +21,7 @@ Project facts (Xcode 27, generated project):
 
 **Done when:** the build runs, the icon is in the menu bar, there's no Dock icon, clicking the icon opens the popup, and Quit works.
 
-## Phase 2 — Bundled images, grid, copy  [ ]
+## Phase 2 — Bundled images, grid, copy  [x]
 
 - Create `PatAMat/PatAMat/Images/` with 3–5 sample images, named per AGENTS.md.
 - **Verify first:** synchronized folders may flatten resources into `Contents/Resources/` instead of keeping `Images/`. Check the built `.app`. If they're flattened, load from the bundle root (filter `png`/`jpg`/`jpeg`). If not, use `subdirectory: "Images"`.
