@@ -55,7 +55,7 @@ You can name and drop the files there by hand, or let the import script name the
 
 ```
 swift scripts/import-memes.swift ~/Downloads/my-memes            # dry run: prints old -> new
-swift scripts/import-memes.swift ~/Downloads/my-memes --apply    # moves the files into Images/
+swift scripts/import-memes.swift ~/Downloads/my-memes --apply    # moves the files into Images/new/ — check names, then move them up into Images/
 ```
 
 The script uses macOS's built-in text recognition (Czech and English). You don't need to install anything besides Xcode. It:

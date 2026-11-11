@@ -1,4 +1,5 @@
-// Renames images by the text in them (OCR) and moves them into the app's Images/ folder.
+// Renames images by the text in them (OCR) and moves them into Images/new/ for review.
+// After checking the names, move them up into Images/ (the bundle is flat, so names must be unique across the whole tree).
 // Usage: swift scripts/import-memes.swift <folder> [--apply]
 // Without --apply it only prints what it would do.
 
@@ -8,6 +9,7 @@ import Vision
 let imagesDir = URL(fileURLWithPath: #filePath)
     .deletingLastPathComponent().deletingLastPathComponent()
     .appendingPathComponent("PatAMat/PatAMat/Images")
+let targetDir = imagesDir.appendingPathComponent("new")
 let maxNameLength = 60
 // Regexes matched against the slug, e.g. "made-with-mematic". Add new watermarks here.
 let watermarks = [
@@ -45,15 +47,21 @@ func slug(_ text: String) -> String {
     return name
 }
 
+// File names already used anywhere under Images/, e.g. "this-is-fine.png".
+func existingNames() -> Set<String> {
+    let enumerator = FileManager.default.enumerator(at: imagesDir, includingPropertiesForKeys: nil)
+    return Set((enumerator?.allObjects as? [URL] ?? []).map { $0.lastPathComponent.lowercased() })
+}
+
 func uniqueURL(_ base: String, ext: String, taken: inout Set<String>) -> URL {
     var name = base
     var n = 2
-    while taken.contains(name) || FileManager.default.fileExists(atPath: imagesDir.appendingPathComponent("\(name).\(ext)").path) {
+    while taken.contains("\(name).\(ext)") {
         name = "\(base)-\(n)"
         n += 1
     }
-    taken.insert(name)
-    return imagesDir.appendingPathComponent("\(name).\(ext)")
+    taken.insert("\(name).\(ext)")
+    return targetDir.appendingPathComponent("\(name).\(ext)")
 }
 
 let args = CommandLine.arguments.dropFirst()
@@ -66,7 +74,8 @@ let files = try FileManager.default.contentsOfDirectory(at: URL(fileURLWithPath:
     .filter { ["png", "jpg", "jpeg"].contains($0.pathExtension.lowercased()) }
     .sorted { $0.lastPathComponent < $1.lastPathComponent }
 
-var taken = Set<String>()
+var taken = existingNames()
+if apply { try FileManager.default.createDirectory(at: targetDir, withIntermediateDirectories: true) }
 var failed = 0
 for file in files {
     do {
@@ -80,5 +89,5 @@ for file in files {
         print("FAILED \(file.lastPathComponent): \(error.localizedDescription)")
     }
 }
-print(apply ? "Moved \(files.count - failed) images into \(imagesDir.path)" : "Dry run. Add --apply to move the files.")
+print(apply ? "Moved \(files.count - failed) images into \(targetDir.path). Check the names, then move them up into Images/." : "Dry run. Add --apply to move the files.")
 if failed > 0 { exit(1) }

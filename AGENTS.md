@@ -27,7 +27,7 @@ Tags come only from the file name. There is no metadata file.
 
 Naming convention for images: lowercase, no diacritics, words separated by `-`, e.g. `surprised-pikachu.png`.
 
-Adding images: `swift scripts/import-memes.swift <folder>` OCRs each image (Vision, cs-CZ + en-US), names it by its text, strips known watermarks and prints `old -> new`. Add `--apply` to move the files into `Images/`. Images without text come out as `meme-N`, rename them by hand. New watermarks go in the `watermarks` list at the top of the script.
+Adding images: `swift scripts/import-memes.swift <folder>` OCRs each image (Vision, cs-CZ + en-US), names it by its text, strips known watermarks and prints `old -> new`. Add `--apply` to move the files into `Images/new/` for review (names are kept unique across the whole `Images/` tree, since Xcode flattens it into the bundle). After checking, move them up into `Images/`. Images without text come out as `meme-N`, rename them by hand. New watermarks go in the `watermarks` list at the top of the script.
 
 ## Implementation overview
 
@@ -50,7 +50,7 @@ Adding images: `swift scripts/import-memes.swift <folder>` OCRs each image (Visi
 ```
 PLAN.md                    # phased implementation plan, work one phase per session
 scripts/
-  import-memes.swift       # OCR-rename images and move them into Images/
+  import-memes.swift       # OCR-rename images and move them into Images/new/
 PatAMat/
   PatAMat.xcodeproj
   PatAMat/                 # synchronized folder: files dropped here join the target
