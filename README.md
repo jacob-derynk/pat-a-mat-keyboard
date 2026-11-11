@@ -2,9 +2,17 @@
 
 A macOS menu bar app for finding a reaction image by keyword and copying it to the clipboard in one click. Paste it straight into Slack, Messages, etc.
 
+![Hlavně klid ano](PatAMatKeyboard/PatAMatKeyboard/Images/hlavne-klid-ano.jpg)
+
+## How it works
+
+| 1. Click the menu bar icon | 2. Type to filter | 3. Click an image, paste anywhere |
+| --- | --- | --- |
+| ![Menu bar icon](docs/menubar.png) | ![Search results](docs/search.png) | ![Image pasted into Slack](docs/paste.png) |
+
 ## Build
 
-Requires Xcode (macOS 27). No other dependencies.
+Requires Xcode. No other dependencies. The app runs on macOS 14 (Sonoma) and newer.
 
 The app has no Dock icon and no window: after launch, look for the smiley icon in the menu bar. Quit it from the popup (Quit button or ⌘Q while the popup is open).
 
@@ -40,6 +48,32 @@ Use `clean`: an incremental build can keep images you deleted from `Images/` in 
 To start it at login, add `/Applications/PatAMatKeyboard.app` in System Settings → General → Login Items (once; reinstalling to the same path should keep it, re-add it if it disappears).
 
 Images are bundled into the app, so after adding, renaming or deleting images, run the prod build and install again.
+
+### Share as a DMG
+
+Build the Release app first (see above), then pack it into a DMG with the usual "drag to Applications" window:
+
+```
+rm -rf build/dmg && mkdir -p build/dmg
+ditto build/Build/Products/Release/PatAMatKeyboard.app build/dmg/PatAMatKeyboard.app
+ln -s /Applications build/dmg/Applications
+hdiutil create -volname PatAMatKeyboard -srcfolder build/dmg -ov -format UDZO build/PatAMatKeyboard.dmg
+```
+
+Send `build/PatAMatKeyboard.dmg` to whoever wants it.
+
+The app is not signed with a paid Apple Developer ID, so macOS blocks it on first launch. Send these steps along with the DMG:
+
+1. Open the DMG and drag PatAMatKeyboard to Applications.
+2. Open PatAMatKeyboard from Applications. macOS says it can't be verified: click **Done**.
+3. Open System Settings → Privacy & Security, scroll down, click **Open Anyway** next to PatAMatKeyboard and confirm.
+4. Look for the smiley icon in the menu bar.
+
+If macOS says the app "is damaged and can't be opened", run this once in Terminal, then open the app again:
+
+```
+xattr -cr /Applications/PatAMatKeyboard.app
+```
 
 ## Usage
 
