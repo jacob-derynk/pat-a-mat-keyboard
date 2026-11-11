@@ -27,7 +27,7 @@ Naming convention for images: lowercase, words separated by `-`, e.g. `surprised
 
 ## Implementation overview
 
-- **Stack:** Swift + SwiftUI, Xcode project, no third-party dependencies. Deployment target macOS 14.
+- **Stack:** Swift + SwiftUI, Xcode project, no third-party dependencies. Deployment target macOS 27 (Xcode default; personal use only).
 - **Menu bar:** SwiftUI `MenuBarExtra` with `.menuBarExtraStyle(.window)` as the app's only scene. `LSUIElement = YES` in Info.plist hides the Dock icon.
 - **Images:** a plain folder `Images/` added to the app target as bundled resources (not an asset catalog: an asset catalog cannot be enumerated at runtime). Loaded once at launch via `Bundle.main.urls(forResourcesWithExtension:subdirectory:)` for `png`, `jpg`, `jpeg`. Adding a meme = drop a file in the folder and rebuild.
 - **Clipboard:** `NSPasteboard.general.clearContents()` then `writeObjects([NSImage])`. Check paste into Slack and Messages; if an app ignores TIFF, also write PNG data.
@@ -43,11 +43,11 @@ Naming convention for images: lowercase, words separated by `-`, e.g. `surprised
 
 ## Repo layout
 
-To be created with the Xcode project. Planned:
-
 ```
-PatAMat.xcodeproj
+PLAN.md                    # phased implementation plan, work one phase per session
 PatAMat/
-  PatAMatApp.swift   # MenuBarExtra scene + popup view
-  Images/            # bundled meme images, file name = tags
+  PatAMat.xcodeproj
+  PatAMat/                 # synchronized folder: files dropped here join the target
+    PatAMatApp.swift       # MenuBarExtra scene + popup view
+    Images/                # bundled meme images, file name = tags
 ```
