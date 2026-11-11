@@ -31,7 +31,7 @@ Adding images: `swift scripts/import-memes.swift <folder>` OCRs each image (Visi
 
 ## Implementation overview
 
-- **Stack:** Swift + SwiftUI, Xcode project, no third-party dependencies. Deployment target macOS 27 (Xcode default; personal use only).
+- **Stack:** Swift + SwiftUI, Xcode project, no third-party dependencies. Deployment target macOS 14 (last 4 macOS versions).
 - **Menu bar:** SwiftUI `MenuBarExtra` with `.menuBarExtraStyle(.window)` as the app's only scene. `LSUIElement = YES` in Info.plist hides the Dock icon.
 - **Images:** a plain folder `Images/` added to the app target as bundled resources (not an asset catalog: an asset catalog cannot be enumerated at runtime). Loaded once at launch via `Bundle.main.urls(forResourcesWithExtension:subdirectory:)` for `png`, `jpg`, `jpeg`. Adding a meme = drop a file in the folder and rebuild.
 - **Clipboard:** `NSPasteboard.general.clearContents()` then `writeObjects([NSImage])`. Check paste into Slack and Messages; if an app ignores TIFF, also write PNG data.
