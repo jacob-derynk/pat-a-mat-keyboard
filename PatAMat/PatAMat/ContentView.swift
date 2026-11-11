@@ -44,15 +44,55 @@ struct Meme: Identifiable {
     }
 }
 
+/// Search rules from AGENTS.md: every query word must be a substring of the normalized file name.
+func matches(name: String, query: String) -> Bool {
+    let normalizedName = name.lowercased()
+        .folding(options: .diacriticInsensitive, locale: nil)
+        .replacingOccurrences(of: "-", with: " ")
+        .replacingOccurrences(of: "_", with: " ")
+    let words = query.lowercased()
+        .folding(options: .diacriticInsensitive, locale: nil)
+        .split(whereSeparator: \.isWhitespace)
+    return words.allSatisfy { normalizedName.contains($0) }
+}
+
+#if DEBUG
+func checkSearchRules() {
+    assert(matches(name: "this-is-fine", query: "fine"))
+    assert(matches(name: "this-is-fine", query: "this is"))
+    assert(matches(name: "this-is-fine", query: "is fi"))
+    assert(!matches(name: "this-is-fine", query: "dog"))
+    assert(matches(name: "this-is-fine", query: ""))
+    assert(matches(name: "this-is-fine", query: "  "))
+    assert(matches(name: "kdyz-to-bylo", query: "když"))
+}
+#endif
+
 struct ContentView: View {
     private let columns = [GridItem(.flexible(), spacing: 8), GridItem(.flexible(), spacing: 8)]
+    @State private var query = ""
+    @FocusState private var isSearchFocused: Bool
+
+    private var filteredMemes: [Meme] {
+        Meme.all.filter { matches(name: $0.name, query: query) }
+    }
 
     var body: some View {
         VStack(spacing: 8) {
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 8) {
-                    ForEach(Meme.all) { meme in
-                        MemeCell(meme: meme) { copy(meme) }
+            TextField("Search", text: $query)
+                .textFieldStyle(.roundedBorder)
+                .focused($isSearchFocused)
+            if filteredMemes.isEmpty {
+                Spacer()
+                Text("No match")
+                    .foregroundStyle(.secondary)
+                Spacer()
+            } else {
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: 8) {
+                        ForEach(filteredMemes) { meme in
+                            MemeCell(meme: meme) { copy(meme) }
+                        }
                     }
                 }
             }
@@ -64,6 +104,13 @@ struct ContentView: View {
         }
         .padding()
         .frame(width: 360, height: 420)
+        // The MenuBarExtra view stays alive between openings, so onAppear fires only once.
+        // The popup is the app's only window, so its becoming key means "popup opened".
+        .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeKeyNotification)) { _ in
+            query = ""
+            isSearchFocused = true
+        }
+        .onExitCommand { NSApp.keyWindow?.close() }
     }
 
     private func copy(_ meme: Meme) {

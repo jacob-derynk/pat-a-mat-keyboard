@@ -19,11 +19,13 @@ Non-goals for v1: user-added images, tag editing, favourites or recents, GIF/ani
 Tags come only from the file name. There is no metadata file.
 
 - Take the name without its extension, lowercase it, and replace `-` and `_` with spaces: `this-is-fine.png` → `this is fine`.
+- Fold diacritics in both the name and the query (`folding(options: .diacriticInsensitive, locale: nil)`), so `kdyz` and `když` match the same image.
 - Split the query on whitespace. An image matches when its normalized name contains every query word as a substring.
 - Empty query shows all images, sorted by name.
 - Examples for `this-is-fine.png`: `fine` ✅, `this is` ✅, `is fi` ✅, `dog` ❌.
+- Example for `kdyz-to-bylo.png`: `když` ✅.
 
-Naming convention for images: lowercase, words separated by `-`, e.g. `surprised-pikachu.png`.
+Naming convention for images: lowercase, no diacritics, words separated by `-`, e.g. `surprised-pikachu.png`.
 
 ## Implementation overview
 

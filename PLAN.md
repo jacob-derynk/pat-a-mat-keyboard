@@ -32,11 +32,12 @@ Project facts (Xcode 27, generated project):
 
 **Done when:** clicking an image puts it on the clipboard and pasting works in Slack and Messages. If one of them pastes nothing, also write PNG data to the pasteboard.
 
-## Phase 3 — Search  [ ]
+## Phase 3 — Search  [x]
 
 - Search field above the grid, focused when the popup opens (`@FocusState`). Clear it when the popup reopens.
 - Pure function `matches(name:query:) -> Bool` implementing the rules in AGENTS.md "Search rules".
-- Leave one runnable check: DEBUG-only `assert`s for the AGENTS.md examples (`fine`, `this is`, `is fi`, `dog`, empty query), run once at launch.
+- Fold diacritics in name and query (see AGENTS.md "Search rules").
+- Leave one runnable check: DEBUG-only `assert`s for the AGENTS.md examples (`fine`, `this is`, `is fi`, `dog`, `když`, empty query), run once at launch.
 - Esc closes the popup.
 
 **Done when:** typing filters the grid live, the asserts pass in a Debug run, and an empty result shows a short "No match" text.
