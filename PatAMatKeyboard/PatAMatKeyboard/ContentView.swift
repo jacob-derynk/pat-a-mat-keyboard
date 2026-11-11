@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  PatAMat
+//  PatAMatKeyboard
 //
 //  Created by Jacob Derynk on 11.11.2026.
 //
@@ -23,7 +23,7 @@ struct Meme: Identifiable {
         }
         return urls.compactMap { url in
             guard let thumbnail = makeThumbnail(url: url) else {
-                print("PatAMat: cannot read image \(url.lastPathComponent), skipping it")
+                print("PatAMatKeyboard: cannot read image \(url.lastPathComponent), skipping it")
                 return nil
             }
             return Meme(name: url.deletingPathExtension().lastPathComponent, url: url, thumbnail: thumbnail)
@@ -115,14 +115,14 @@ struct ContentView: View {
 
     private func copy(_ meme: Meme) {
         guard let image = NSImage(contentsOf: meme.url) else {
-            print("PatAMat: cannot load \(meme.url.lastPathComponent) for copying")
+            print("PatAMatKeyboard: cannot load \(meme.url.lastPathComponent) for copying")
             NSSound.beep()
             return
         }
         let pasteboard = NSPasteboard.general
         pasteboard.clearContents()
         if !pasteboard.writeObjects([image]) {
-            print("PatAMat: pasteboard refused \(meme.name)")
+            print("PatAMatKeyboard: pasteboard refused \(meme.name)")
             NSSound.beep()
             return
         }

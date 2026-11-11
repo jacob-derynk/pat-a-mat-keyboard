@@ -8,7 +8,7 @@ import Vision
 
 let imagesDir = URL(fileURLWithPath: #filePath)
     .deletingLastPathComponent().deletingLastPathComponent()
-    .appendingPathComponent("PatAMat/PatAMat/Images")
+    .appendingPathComponent("PatAMatKeyboard/PatAMatKeyboard/Images")
 let targetDir = imagesDir.appendingPathComponent("new")
 let maxNameLength = 60
 // Regexes matched against the slug, e.g. "made-with-mematic". Add new watermarks here.

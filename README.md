@@ -1,4 +1,4 @@
-# PatAMat
+# PatAMat Keyboard
 
 A macOS menu bar app for finding a reaction image by keyword and copying it to the clipboard in one click. Paste it straight into Slack, Messages, etc.
 
@@ -13,14 +13,14 @@ The app has no Dock icon and no window: after launch, look for the smiley icon i
 Open the project in Xcode and press ⌘R:
 
 ```
-open PatAMat/PatAMat.xcodeproj
+open PatAMatKeyboard/PatAMatKeyboard.xcodeproj
 ```
 
 Or from the terminal:
 
 ```
-xcodebuild -project PatAMat/PatAMat.xcodeproj -scheme PatAMat -configuration Debug -derivedDataPath build build
-open build/Build/Products/Debug/PatAMat.app
+xcodebuild -project PatAMatKeyboard/PatAMatKeyboard.xcodeproj -scheme PatAMatKeyboard -configuration Debug -derivedDataPath build build
+open build/Build/Products/Debug/PatAMatKeyboard.app
 ```
 
 The Debug build checks the search rules on launch with `assert`s and crashes right away if one fails. Quit the installed app first, or you'll have two icons in the menu bar.
@@ -28,16 +28,16 @@ The Debug build checks the search rules on launch with `assert`s and crashes rig
 ### Prod build and install
 
 ```
-xcodebuild -project PatAMat/PatAMat.xcodeproj -scheme PatAMat -configuration Release -derivedDataPath build clean build
-pkill -x PatAMat
-rm -rf /Applications/PatAMat.app
-ditto build/Build/Products/Release/PatAMat.app /Applications/PatAMat.app
-open /Applications/PatAMat.app
+xcodebuild -project PatAMatKeyboard/PatAMatKeyboard.xcodeproj -scheme PatAMatKeyboard -configuration Release -derivedDataPath build clean build
+pkill -x PatAMatKeyboard
+rm -rf /Applications/PatAMatKeyboard.app
+ditto build/Build/Products/Release/PatAMatKeyboard.app /Applications/PatAMatKeyboard.app
+open /Applications/PatAMatKeyboard.app
 ```
 
 Use `clean`: an incremental build can keep images you deleted from `Images/` in the app bundle. `pkill` doesn't stop a build running from Xcode: stop it there with ⌘. first. Otherwise `open` just brings that running copy forward instead of starting the installed app (they share a bundle ID).
 
-To start it at login, add `/Applications/PatAMat.app` in System Settings → General → Login Items (once; reinstalling to the same path should keep it, re-add it if it disappears).
+To start it at login, add `/Applications/PatAMatKeyboard.app` in System Settings → General → Login Items (once; reinstalling to the same path should keep it, re-add it if it disappears).
 
 Images are bundled into the app, so after adding, renaming or deleting images, run the prod build and install again.
 
@@ -49,7 +49,7 @@ Search matches words from the file name, in any order and as partial words. Diac
 
 ## Adding your own images
 
-Images are bundled in `PatAMat/PatAMat/Images/`. The file name is the search tag: lowercase, no diacritics, words separated by `-`, e.g. `this-is-fine.png`. PNG and JPG only.
+Images are bundled in `PatAMatKeyboard/PatAMatKeyboard/Images/`. The file name is the search tag: lowercase, no diacritics, words separated by `-`, e.g. `this-is-fine.png`. PNG and JPG only.
 
 You can name and drop the files there by hand, or let the import script name them from the text in the image:
 

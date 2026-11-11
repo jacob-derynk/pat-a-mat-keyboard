@@ -11,20 +11,20 @@
     ],
   },
   "files": [
-    { "kind": "folder", "path": "PatAMat", "target-membership": [ "PatAMat" ] },
+    { "kind": "folder", "path": "PatAMatKeyboard", "target-membership": [ "PatAMatKeyboard" ] },
     {
       "kind": "group",
       "name": "Products",
       "children": [
-        { "path": "<PRODUCTS>/PatAMat.app", "id": "EBCCF3BB30A494AE00DCD08E", "type": "wrapper.application", "index": false },
+        { "path": "<PRODUCTS>/PatAMatKeyboard.app", "id": "EBCCF3BB30A494AE00DCD08E", "type": "wrapper.application", "index": false },
       ],
     },
   ],
   "targets": [
     {
-      "name": "PatAMat",
+      "name": "PatAMatKeyboard",
       "id": "EBCCF3BA30A494AE00DCD08E",
-      "product": "Products/PatAMat.app",
+      "product": "Products/PatAMatKeyboard.app",
       "product-type": "application",
       "build-phases": [
         "compile-sources",
@@ -50,7 +50,7 @@
           "@executable_path/../Frameworks",
         ],
         "MARKETING_VERSION": "1.0",
-        "PRODUCT_BUNDLE_IDENTIFIER": "cz.jacobderynkdev.PatAMat",
+        "PRODUCT_BUNDLE_IDENTIFIER": "cz.jacobderynkdev.PatAMatKeyboard",
         "PRODUCT_NAME": "$(TARGET_NAME)",
         "REGISTER_APP_GROUPS": "YES",
         "STRING_CATALOG_GENERATE_SYMBOLS": "YES",

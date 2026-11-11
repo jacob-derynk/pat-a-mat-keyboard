@@ -51,9 +51,9 @@ Adding images: `swift scripts/import-memes.swift <folder>` OCRs each image (Visi
 PLAN.md                    # phased implementation plan, work one phase per session
 scripts/
   import-memes.swift       # OCR-rename images and move them into Images/new/
-PatAMat/
-  PatAMat.xcodeproj
-  PatAMat/                 # synchronized folder: files dropped here join the target
-    PatAMatApp.swift       # MenuBarExtra scene + popup view
+PatAMatKeyboard/
+  PatAMatKeyboard.xcodeproj
+  PatAMatKeyboard/                 # synchronized folder: files dropped here join the target
+    PatAMatKeyboardApp.swift       # MenuBarExtra scene + popup view
     Images/                # bundled meme images, file name = tags
 ```

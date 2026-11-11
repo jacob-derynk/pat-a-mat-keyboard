@@ -3,17 +3,17 @@
 Work one phase per fresh session: "Implement phase N of PLAN.md". Each phase ends with a build that runs, a manual check, and one commit. Tick the phase off here in the same commit.
 
 Project facts (Xcode 27, generated project):
-- Project: `PatAMat/PatAMat.xcodeproj`, sources in `PatAMat/PatAMat/`.
-- `PatAMat/PatAMat/` is a synchronized folder: any file dropped there is in the target automatically. Don't edit the project file to add files.
+- Project: `PatAMatKeyboard/PatAMatKeyboard.xcodeproj`, sources in `PatAMatKeyboard/PatAMatKeyboard/`.
+- `PatAMatKeyboard/PatAMatKeyboard/` is a synchronized folder: any file dropped there is in the target automatically. Don't edit the project file to add files.
 - Info.plist is generated. Add keys as `INFOPLIST_KEY_*` build settings, not a plist file.
 - App Sandbox is on. That's fine: the clipboard and bundle reads work inside it.
-- Build: `xcodebuild -project PatAMat/PatAMat.xcodeproj -scheme PatAMat -configuration Debug build`
+- Build: `xcodebuild -project PatAMatKeyboard/PatAMatKeyboard.xcodeproj -scheme PatAMatKeyboard -configuration Debug build`
 
 ---
 
 ## Phase 1 — Menu bar shell  [x]
 
-- Replace `WindowGroup` in `PatAMatApp.swift` with `MenuBarExtra("PatAMat", systemImage: …)` + `.menuBarExtraStyle(.window)`.
+- Replace `WindowGroup` in `PatAMatKeyboardApp.swift` with `MenuBarExtra("PatAMatKeyboard", systemImage: …)` + `.menuBarExtraStyle(.window)`.
 - Add build setting `INFOPLIST_KEY_LSUIElement = YES` (Debug + Release) so the app has no Dock icon.
 - Popup content: placeholder text, fixed frame about 360×420.
 - Delete `ContentView.swift` or turn it into the popup view. Keep it to one view file at most.
@@ -23,7 +23,7 @@ Project facts (Xcode 27, generated project):
 
 ## Phase 2 — Bundled images, grid, copy  [x]
 
-- Create `PatAMat/PatAMat/Images/` with 3–5 sample images, named per AGENTS.md.
+- Create `PatAMatKeyboard/PatAMatKeyboard/Images/` with 3–5 sample images, named per AGENTS.md.
 - **Verify first:** synchronized folders may flatten resources into `Contents/Resources/` instead of keeping `Images/`. Check the built `.app`. If they're flattened, load from the bundle root (filter `png`/`jpg`/`jpeg`). If not, use `subdirectory: "Images"`.
 - Load the list once at launch: name (file name without extension) and URL. Downscale thumbnails so the popup doesn't hold full-size images. The thumbnails must be large enough to read the content of the image (see AGENTS.md).
 - `ScrollView` + `LazyVGrid` of thumbnails. Show a hover highlight.
@@ -45,7 +45,7 @@ Project facts (Xcode 27, generated project):
 ## Phase 4 — Ship your real images  [x]
 
 - Run `swift scripts/import-memes.swift raw-images`, check the dry run, then rerun with `--apply`. Rename the `meme-N` files (no text found) by hand.
-- Release build, copy `PatAMat.app` to `/Applications`, add it to Login Items manually in System Settings.
+- Release build, copy `PatAMatKeyboard.app` to `/Applications`, add it to Login Items manually in System Settings.
 
 ---
 
