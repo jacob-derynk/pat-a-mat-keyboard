@@ -35,7 +35,7 @@ ditto build/Build/Products/Release/PatAMat.app /Applications/PatAMat.app
 open /Applications/PatAMat.app
 ```
 
-Use `clean`: an incremental build can keep images you deleted from `Images/` in the app bundle. `pkill` stops any running PatAMat, Debug ones too.
+Use `clean`: an incremental build can keep images you deleted from `Images/` in the app bundle. `pkill` doesn't stop a build running from Xcode: stop it there with ⌘. first. Otherwise `open` just brings that running copy forward instead of starting the installed app (they share a bundle ID).
 
 To start it at login, add `/Applications/PatAMat.app` in System Settings → General → Login Items (once; reinstalling to the same path should keep it, re-add it if it disappears).
 
