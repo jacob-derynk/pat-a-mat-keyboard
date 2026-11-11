@@ -27,6 +27,8 @@ Tags come only from the file name. There is no metadata file.
 
 Naming convention for images: lowercase, no diacritics, words separated by `-`, e.g. `surprised-pikachu.png`.
 
+Adding images: `swift scripts/import-memes.swift <folder>` OCRs each image (Vision, cs-CZ + en-US), names it by its text, strips known watermarks and prints `old -> new`. Add `--apply` to move the files into `Images/`. Images without text come out as `meme-N`, rename them by hand. New watermarks go in the `watermarks` list at the top of the script.
+
 ## Implementation overview
 
 - **Stack:** Swift + SwiftUI, Xcode project, no third-party dependencies. Deployment target macOS 27 (Xcode default; personal use only).
@@ -47,6 +49,8 @@ Naming convention for images: lowercase, no diacritics, words separated by `-`, 
 
 ```
 PLAN.md                    # phased implementation plan, work one phase per session
+scripts/
+  import-memes.swift       # OCR-rename images and move them into Images/
 PatAMat/
   PatAMat.xcodeproj
   PatAMat/                 # synchronized folder: files dropped here join the target

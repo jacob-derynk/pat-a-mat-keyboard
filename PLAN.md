@@ -42,9 +42,9 @@ Project facts (Xcode 27, generated project):
 
 **Done when:** typing filters the grid live, the asserts pass in a Debug run, and an empty result shows a short "No match" text.
 
-## Phase 4 — Ship your real images  [ ]
+## Phase 4 — Ship your real images  [x]
 
-- You (the user) drop the real images into `Images/` and rename them to the convention.
+- Run `swift scripts/import-memes.swift raw-images`, check the dry run, then rerun with `--apply`. Rename the `meme-N` files (no text found) by hand.
 - Release build, copy `PatAMat.app` to `/Applications`, add it to Login Items manually in System Settings.
 
 ---
